@@ -1,14 +1,18 @@
-from flask import Flask, jsonify, request
+from flask import Flask, render_template, request, redirect
 
 
 app = Flask(__name__)
 
-@app.route('/greet')
+@app.route('/')
 def index():
-    name = request.args.get('name')
-    if not name:
-        return jsonify({'status': 'error'})
+    return render_template('index.html')
 
 
-    response = {'data': f'Hello {name} you are an asshole'}
-    return jsonify(response)
+@app.route('/search')
+def search():
+    args = request.args.get('q')
+    return redirect(f'https://www.google.com/search?q={args}')
+
+
+if __name__ == '__main__':
+    app.run()
